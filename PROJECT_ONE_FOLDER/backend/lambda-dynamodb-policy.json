@@ -1,0 +1,37 @@
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": [
+        "dynamodb:GetItem",
+        "dynamodb:PutItem",
+        "dynamodb:UpdateItem",
+        "dynamodb:DeleteItem",
+        "dynamodb:Query",
+        "dynamodb:Scan"
+      ],
+      "Resource": [
+        "arn:aws:dynamodb:ap-southeast-1:*:table/BillSplitter-Users",
+        "arn:aws:dynamodb:ap-southeast-1:*:table/BillSplitter-Receipts",
+        "arn:aws:dynamodb:ap-southeast-1:*:table/BillSplitter-SplitSessions",
+        "arn:aws:dynamodb:ap-southeast-1:*:table/BillSplitter-PaymentRequests",
+        "arn:aws:dynamodb:ap-southeast-1:*:table/BillSplitter-TransactionHistory",
+        "arn:aws:dynamodb:ap-southeast-1:*:table/BillSplitter-Users/index/*",
+        "arn:aws:dynamodb:ap-southeast-1:*:table/BillSplitter-Receipts/index/*",
+        "arn:aws:dynamodb:ap-southeast-1:*:table/BillSplitter-SplitSessions/index/*",
+        "arn:aws:dynamodb:ap-southeast-1:*:table/BillSplitter-PaymentRequests/index/*",
+        "arn:aws:dynamodb:ap-southeast-1:*:table/BillSplitter-TransactionHistory/index/*"
+      ]
+    },
+    {
+      "Effect": "Allow",
+      "Action": [
+        "logs:CreateLogGroup",
+        "logs:CreateLogStream",
+        "logs:PutLogEvents"
+      ],
+      "Resource": "arn:aws:logs:ap-southeast-1:*:*"
+    }
+  ]
+}
