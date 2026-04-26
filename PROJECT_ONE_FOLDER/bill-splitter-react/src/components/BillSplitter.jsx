@@ -8,6 +8,8 @@ import RequestSentStep from './steps/RequestSentStep'
 import SplitStep from './steps/SplitStep'
 import PaymentStep from './steps/PaymentStep'
 
+const LOCAL_UPLOADED_RECEIPTS_KEY = 'uploaded_receipts_local_v1'
+
 function BillSplitter({ onBack, selectedReceipt }) {
   const toCents = (amount) => Math.round((Number(amount) || 0) * 100)
   const centsToAmount = (cents) => cents / 100
@@ -76,6 +78,16 @@ function BillSplitter({ onBack, selectedReceipt }) {
   const [confirmedData, setConfirmedData] = useState([])
   const [splitResult, setSplitResult] = useState([])
 
+  const readLocalUploadedReceipts = () => {
+    try {
+      const raw = localStorage.getItem(LOCAL_UPLOADED_RECEIPTS_KEY)
+      const parsed = raw ? JSON.parse(raw) : []
+      return Array.isArray(parsed) ? parsed : []
+    } catch {
+      return []
+    }
+  }
+
   // Use selected receipt or fetch if not provided
   useEffect(() => {
     if (selectedReceipt) {
@@ -99,6 +111,25 @@ function BillSplitter({ onBack, selectedReceipt }) {
       const fetchReceipt = async () => {
         try {
           setLoading(true)
+          const localUploaded = readLocalUploadedReceipts()
+          if (localUploaded.length > 0) {
+            const latestLocal = localUploaded[0]
+            setReceiptData(normalizeReceiptToInclusiveItems({
+              receipt_id: latestLocal.receipt_id,
+              restaurant_name: latestLocal.restaurant_name,
+              date: latestLocal.date,
+              time: latestLocal.time,
+              items: latestLocal.items || [],
+              subtotal: latestLocal.subtotal,
+              tax: latestLocal.tax,
+              service: latestLocal.service,
+              total: latestLocal.total
+            }))
+            setCurrentStep(2)
+            setError(null)
+            return
+          }
+
           const response = await getReceipts('user_123', 1, 0, 'ready_to_split')
           
           if (response.success && response.receipts.length > 0) {
@@ -114,6 +145,7 @@ function BillSplitter({ onBack, selectedReceipt }) {
               service: receipt.service,
               total: receipt.total
             }))
+            setError(null)
           } else {
             setError('No receipts found')
           }
@@ -178,10 +210,12 @@ function BillSplitter({ onBack, selectedReceipt }) {
         </div>
         <div className="splitter-content">
           <div className="card" style={{ textAlign: 'center', padding: '40px' }}>
-            <div style={{ fontSize: '40px', marginBottom: '15px' }}>❌</div>
-            <div style={{ fontSize: '16px', fontWeight: '600', marginBottom: '8px' }}>Error Loading Receipt</div>
-            <div style={{ fontSize: '13px', color: '#666', marginBottom: '20px' }}>{error || 'No receipt data available'}</div>
-            <button className="primary-btn" onClick={onBack}>Go Back</button>
+            <div style={{ fontSize: '40px', marginBottom: '15px' }}>🧾</div>
+            <div style={{ fontSize: '16px', fontWeight: '600', marginBottom: '8px' }}>No Receipt Yet</div>
+            <div style={{ fontSize: '13px', color: '#666', marginBottom: '20px' }}>
+              Upload a receipt from the + button, then tap it to continue splitting.
+            </div>
+            <button className="primary-btn" onClick={onBack}>Back to Receipts</button>
           </div>
         </div>
       </>

@@ -1,15 +1,28 @@
 import { useState } from 'react'
 import { Camera, X, Search, Upload, Image } from 'lucide-react'
 
+const API_BASE_URL =
+  import.meta.env.VITE_API_BASE_URL || 'https://fs05jjlase.execute-api.ap-southeast-1.amazonaws.com'
+
 function UploadModal({ onClose, onUploadSuccess }) {
   const [isProcessing, setIsProcessing] = useState(false)
   const [progress, setProgress] = useState(0)
   const [selectedFile, setSelectedFile] = useState(null)
   const [previewUrl, setPreviewUrl] = useState(null)
+  const [error, setError] = useState('')
+
+  const toBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader()
+      reader.onloadend = () => resolve(String(reader.result || ''))
+      reader.onerror = reject
+      reader.readAsDataURL(file)
+    })
 
   const handleFileSelect = (event) => {
     const file = event.target.files[0]
     if (!file) return
+    setError('')
 
     // Show preview
     setSelectedFile(file)
@@ -22,37 +35,79 @@ function UploadModal({ onClose, onUploadSuccess }) {
 
   const handleUpload = async () => {
     if (!selectedFile) return
+    if (selectedFile.type === 'application/pdf') {
+      setError('PDF OCR is not enabled yet. Please upload JPG or PNG.')
+      return
+    }
 
     setIsProcessing(true)
     setProgress(0)
+    setError('')
 
-    // Simulate upload and OCR processing
-    const interval = setInterval(() => {
-      setProgress(prev => {
-        if (prev >= 100) {
-          clearInterval(interval)
-          setTimeout(() => {
-            // Create a mock receipt object
-            const newReceipt = {
-              receipt_id: `rcpt_${Date.now()}`,
-              restaurant_name: 'New Receipt',
-              total: 0,
-              date: new Date().toISOString().split('T')[0],
-              time: new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
-              status: 'ready_to_split',
-              items: [],
-              items_count: 0
-            }
-            
-            setIsProcessing(false)
-            setProgress(0)
-            onUploadSuccess(newReceipt)
-          }, 500)
-          return 100
+    try {
+      const dataUrl = await toBase64(selectedFile)
+      const base64 = dataUrl.includes(',') ? dataUrl.split(',')[1] : dataUrl
+      setProgress(35)
+
+      const endpoints = [`${API_BASE_URL}/parse-bill`, `${API_BASE_URL}/ai/parse-bill`]
+      let ocrPayload = null
+      let lastErrorMessage = ''
+
+      for (const endpoint of endpoints) {
+        try {
+          const response = await fetch(endpoint, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              receipt_image_base64: base64,
+              receipt_image_mime_type: selectedFile.type || 'image/jpeg'
+            })
+          })
+          const json = await response.json()
+          if (!response.ok) {
+            throw new Error(json?.error || json?.message || `OCR failed (${response.status})`)
+          }
+          if (json?.success && json?.receipt) {
+            ocrPayload = json
+            break
+          }
+        } catch (endpointError) {
+          lastErrorMessage = endpointError?.message || 'OCR request failed.'
+          // Try fallback endpoint.
         }
-        return prev + 10
-      })
-    }, 200)
+      }
+
+      if (!ocrPayload?.receipt) {
+        throw new Error(lastErrorMessage || 'OCR endpoint unavailable or returned no receipt data.')
+      }
+
+      setProgress(85)
+      const receipt = ocrPayload.receipt
+      const newReceipt = {
+        receipt_id: `rcpt_${Date.now()}`,
+        restaurant_name: receipt.restaurant_name || 'Scanned Receipt',
+        subtotal: Number(receipt.subtotal || 0),
+        tax: Number(receipt.tax || 0),
+        service: Number(receipt.service || 0),
+        total: Number(receipt.total || 0),
+        date: receipt.date || new Date().toISOString().split('T')[0],
+        time: receipt.time || new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }),
+        status: 'ready_to_split',
+        items: Array.isArray(receipt.items) ? receipt.items : [],
+        items_count: Array.isArray(receipt.items) ? receipt.items.length : 0
+      }
+
+      setProgress(100)
+      setTimeout(() => {
+        setIsProcessing(false)
+        setProgress(0)
+        onUploadSuccess(newReceipt)
+      }, 400)
+    } catch (err) {
+      setIsProcessing(false)
+      setProgress(0)
+      setError(err.message || 'Failed to process receipt.')
+    }
   }
 
   const handleCancel = () => {
@@ -152,6 +207,11 @@ function UploadModal({ onClose, onUploadSuccess }) {
                 Upload
               </button>
             </div>
+            {error && (
+              <div style={{ marginTop: '12px', color: '#c62828', fontSize: '12px' }}>
+                {error}
+              </div>
+            )}
           </div>
         ) : (
           <div style={{ textAlign: 'center', padding: '20px' }}>

@@ -3,12 +3,71 @@ import { ArrowLeft, Receipt, ChevronRight, Calendar, DollarSign, Plus, Upload } 
 import { getReceipts } from '../services/api'
 import UploadModal from './modals/UploadModal'
 
+const LOCAL_UPLOADED_RECEIPTS_KEY = 'uploaded_receipts_local_v1'
+
 function ReceiptsListScreen({ onBack, onSelectReceipt }) {
   const [receipts, setReceipts] = useState([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState(null)
   const [filter, setFilter] = useState('all') // all, ready_to_split, completed
   const [showUploadModal, setShowUploadModal] = useState(false)
+
+  const normalizeReceipt = (receipt) => {
+    const items = Array.isArray(receipt?.items) ? receipt.items : []
+    const total = Number(receipt?.total || 0)
+    return {
+      receipt_id: receipt?.receipt_id || `rcpt_${Date.now()}`,
+      restaurant_name: receipt?.restaurant_name || 'Scanned Receipt',
+      subtotal: Number(receipt?.subtotal || total),
+      tax: Number(receipt?.tax || 0),
+      service: Number(receipt?.service || 0),
+      total,
+      date: receipt?.date || new Date().toISOString().split('T')[0],
+      time:
+        receipt?.time ||
+        new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }),
+      status: receipt?.status || 'ready_to_split',
+      items,
+      items_count: Number(receipt?.items_count ?? items.length)
+    }
+  }
+
+  const readLocalUploadedReceipts = () => {
+    try {
+      const raw = localStorage.getItem(LOCAL_UPLOADED_RECEIPTS_KEY)
+      if (!raw) return []
+      const parsed = JSON.parse(raw)
+      if (!Array.isArray(parsed)) return []
+      return parsed.map(normalizeReceipt)
+    } catch {
+      return []
+    }
+  }
+
+  const writeLocalUploadedReceipts = (list) => {
+    try {
+      localStorage.setItem(LOCAL_UPLOADED_RECEIPTS_KEY, JSON.stringify(list))
+    } catch {
+      // Ignore storage write errors.
+    }
+  }
+
+  const applyFilter = (list, activeFilter) => {
+    if (activeFilter === 'all') return list
+    return list.filter((receipt) => receipt.status === activeFilter)
+  }
+
+  const mergeReceipts = (apiReceipts, uploadedReceipts) => {
+    const seen = new Set()
+    const merged = []
+    ;[...uploadedReceipts, ...apiReceipts].forEach((receipt) => {
+      const normalized = normalizeReceipt(receipt)
+      if (seen.has(normalized.receipt_id)) return
+      seen.add(normalized.receipt_id)
+      merged.push(normalized)
+    })
+    return merged
+  }
 
   useEffect(() => {
     fetchReceipts()
@@ -18,15 +77,24 @@ function ReceiptsListScreen({ onBack, onSelectReceipt }) {
     try {
       setLoading(true)
       const response = await getReceipts('user_123', 20, 0, filter === 'all' ? undefined : filter)
+      const localUploaded = readLocalUploadedReceipts()
       
       if (response.success) {
-        setReceipts(response.receipts)
+        const merged = mergeReceipts(response.receipts || [], localUploaded)
+        setReceipts(applyFilter(merged, filter))
       } else {
-        setError('Failed to load receipts')
+        setReceipts(applyFilter(localUploaded, filter))
+        if (localUploaded.length === 0) {
+          setError('Failed to load receipts')
+        }
       }
     } catch (err) {
       console.error('Error fetching receipts:', err)
-      setError('Failed to load receipts')
+      const localUploaded = readLocalUploadedReceipts()
+      setReceipts(applyFilter(localUploaded, filter))
+      if (localUploaded.length === 0) {
+        setError('Failed to load receipts')
+      }
     } finally {
       setLoading(false)
     }
@@ -186,7 +254,11 @@ function ReceiptsListScreen({ onBack, onSelectReceipt }) {
           onClose={() => setShowUploadModal(false)}
           onUploadSuccess={(newReceipt) => {
             setShowUploadModal(false)
-            fetchReceipts() // Refresh the list
+            const normalized = normalizeReceipt(newReceipt)
+            const existing = readLocalUploadedReceipts()
+            const updatedLocal = [normalized, ...existing.filter((r) => r.receipt_id !== normalized.receipt_id)]
+            writeLocalUploadedReceipts(updatedLocal)
+            fetchReceipts() // Refresh list with local + API data.
           }}
         />
       )}
