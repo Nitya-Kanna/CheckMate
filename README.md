@@ -39,7 +39,7 @@ What sets CheckMate apart is its **genuine multi-cloud architecture**. The backe
 ### Full App Walkthrough
 Experience CheckMate in action — from receipt upload to payment completion:
 
-(https://github.com/user-attachments/assets/43b28910-bced-4e0e-984b-3604c4f26423)
+https://github.com/user-attachments/assets/43b28910-bced-4e0e-984b-3604c4f26423
 
 **[Drag and drop your video here]**
 
