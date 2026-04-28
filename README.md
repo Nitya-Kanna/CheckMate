@@ -46,15 +46,22 @@ What sets CheckMate apart is its **genuine multi-cloud architecture**. The backe
 ### Full App Walkthrough
 Experience CheckMate in action — from receipt upload to payment completion:
 
-<video src="https://github.com/user-attachments/assets/2ba031ff-075f-41e5-9d7a-15cafaaa699d" controls width="100%"></video>
+https://github.com/Nitya-Kanna/CheckMate/assets/demo-videos/2ba031ff-075f-41e5-9d7a-15cafaaa699d.mov
 
 ### Quick Split Demo
 Watch how natural language splitting works in real-time:
 
-<video src="https://github.com/user-attachments/assets/2ba031ff-075f-41e5-9d7a-15cafaaa699d" controls width="100%"></video>
+https://github.com/Nitya-Kanna/CheckMate/assets/demo-videos/2ba031ff-075f-41e5-9d7a-15cafaaa699d%202.mov
 
-> **Note:** Videos are embedded directly in the README for instant playback. Click play to watch the demos!
+> **Note:** Click the video links above to watch the demos. GitHub will play them inline!
 
+---
+
+## ✨ Key Features
+
+| Feature | Description |
+|---------|-------------|
+| 📸 **Receipt Upload** | Capture receipts via camera or file picker. Optimized for mobile PWA with instant preview. |
 | 🤖 **AI-Powered OCR** | Qwen Vision-Language Model reads receipt images and returns structured JSON with items, prices, tax, and totals. |
 | 🗣️ **Natural Language Splitting** | Type *"Calvin had nasi lemak, Jet had iced coffee, rojak shared"* and AI auto-discovers people, resolves contact ambiguity, assigns items, and calculates amounts. |
 | 🎛️ **Manual Assignment UI** | Interactive dropdowns per item let users manually pick who ordered what, with live total calculation. |
