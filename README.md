@@ -346,22 +346,22 @@ VITE_TNG_MERCHANT_ID=your_tng_merchant_id
 
 ## 🔮 Future Roadmap
 
-### **Phase 1: POS Integration (Q2 2026)**
+### **Phase 1: POS Integration**
 - Direct integration with restaurant POS systems
 - Real-time receipt delivery via webhook
 - Automatic split initiation upon payment completion
 
-### **Phase 2: Enhanced AI (Q3 2026)**
+### **Phase 2: Enhanced AI **
 - Multi-language receipt support (Malay, Chinese, Tamil)
 - Handwritten receipt recognition
 - Smart item categorization (food, drinks, desserts)
 
-### **Phase 3: Social Features (Q4 2026)**
+### **Phase 3: Social Features **
 - Group splitting history
 - Recurring split templates
 - Split analytics & insights
 
-### **Phase 4: Payment Expansion (2027)**
+### **Phase 4: Payment Expansion **
 - GrabPay integration
 - Boost eWallet support
 - International payment methods
