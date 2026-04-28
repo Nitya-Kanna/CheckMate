@@ -34,26 +34,19 @@ What sets CheckMate apart is its **genuine multi-cloud architecture**. The backe
 
 ---
 
-## ✨ Key Features
-
-| Feature | Description |
-|---------|-------------|
-| 📸 **Receipt Upload** | Capture receipts via camera or file picker. Optimized for mobile PWA with instant preview. |
----
-
 ## 🎬 Demo Videos
 
 ### Full App Walkthrough
 Experience CheckMate in action — from receipt upload to payment completion:
 
-https://github.com/Nitya-Kanna/CheckMate/assets/demo-videos/2ba031ff-075f-41e5-9d7a-15cafaaa699d.mov
+**[Drag and drop your video here]**
 
 ### Quick Split Demo
 Watch how natural language splitting works in real-time:
 
-https://github.com/Nitya-Kanna/CheckMate/assets/demo-videos/2ba031ff-075f-41e5-9d7a-15cafaaa699d%202.mov
+**[Drag and drop your video here]**
 
-> **Note:** Click the video links above to watch the demos. GitHub will play them inline!
+> **📝 To add videos:** Edit this README on GitHub, then drag and drop the `.mov` files from `demo-videos/` folder directly into the editor. GitHub will automatically upload and embed them!
 
 ---
 
