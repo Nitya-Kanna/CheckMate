@@ -41,7 +41,7 @@ Experience CheckMate in action — from receipt upload to payment completion:
 
 https://github.com/user-attachments/assets/43b28910-bced-4e0e-984b-3604c4f26423
 
-**[Drag and drop your video here]**
+https://github.com/user-attachments/assets/2d269de3-1606-4376-9e66-7889c8442248
 
 > **📝 To add videos:** Edit this README on GitHub, then drag and drop the `.mov` files from `demo-videos/` folder directly into the editor. GitHub will automatically upload and embed them!
 
