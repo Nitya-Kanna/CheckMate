@@ -2,18 +2,13 @@
 Seed script to populate DynamoDB tables with test data
 Run: python backend/seed_data.py
 """
-import boto3
 from decimal import Decimal
 from datetime import datetime, timedelta
 from models import generate_id, get_current_timestamp
+from config import config
+from repository import users_table, receipts_table, transaction_history_table
 
-# Initialize DynamoDB client
-dynamodb = boto3.resource('dynamodb', region_name='ap-southeast-1')
-
-# Table references
-users_table = dynamodb.Table('BillSplitter-Users')
-receipts_table = dynamodb.Table('BillSplitter-Receipts')
-transaction_history_table = dynamodb.Table('BillSplitter-TransactionHistory')
+print(f"Using tables: {config.DYNAMODB_USERS_TABLE}, {config.DYNAMODB_RECEIPTS_TABLE}, {config.DYNAMODB_TRANSACTION_HISTORY_TABLE}")
 
 
 def convert_floats_to_decimal(obj):
@@ -325,9 +320,9 @@ def main():
         print("=" * 60)
         print()
         print("Summary:")
-        print("- 5 users added to BillSplitter-Users")
-        print("- 4 receipts added to BillSplitter-Receipts")
-        print("- 6 transactions added to BillSplitter-TransactionHistory")
+        print(f"- 5 users added to {config.DYNAMODB_USERS_TABLE}")
+        print(f"- 4 receipts added to {config.DYNAMODB_RECEIPTS_TABLE}")
+        print(f"- 6 transactions added to {config.DYNAMODB_TRANSACTION_HISTORY_TABLE}")
         print()
         print("You can now test your Lambda functions with real data!")
         

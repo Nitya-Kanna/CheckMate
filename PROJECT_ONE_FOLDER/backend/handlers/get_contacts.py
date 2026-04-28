@@ -9,7 +9,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils import success_response, error_response, parse_query_params, validate_required_params
-from db import get_all_users, search_users
+from repository import get_all_users, search_users
 from datetime import datetime
 
 

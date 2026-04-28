@@ -9,7 +9,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils import success_response, error_response, parse_query_params, validate_required_params
-from db import get_receipts_by_user
+from repository import get_receipts_by_user
 
 
 def handler(event, context):

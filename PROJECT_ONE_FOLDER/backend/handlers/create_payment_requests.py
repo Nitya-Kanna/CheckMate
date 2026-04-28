@@ -6,13 +6,8 @@ import json
 import uuid
 from datetime import datetime, timedelta
 from decimal import Decimal
-from db import dynamodb
+from repository import payment_requests_table, split_sessions_table, transaction_history_table
 from utils import success_response, error_response
-
-# DynamoDB tables
-payment_requests_table = dynamodb.Table('PaymentRequests')
-split_sessions_table = dynamodb.Table('SplitSessions')
-transaction_history_table = dynamodb.Table('TransactionHistory')
 
 
 def lambda_handler(event, context):

@@ -9,7 +9,7 @@ import os
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from utils import success_response, error_response, parse_query_params, validate_required_params
-from db import get_transaction_history
+from repository import get_transaction_history
 from datetime import datetime, timedelta
 
 
@@ -37,12 +37,7 @@ def handler(event, context):
             limit = 100
         
         # Get transaction history from DynamoDB
-        # For now, use mock data until DynamoDB is fully integrated
-        # TODO: Uncomment when DynamoDB permissions are set up
-        # transactions = get_transaction_history(user_id, limit=limit)
-        
-        # TEMPORARY: Use mock data
-        transactions = generate_mock_transactions(user_id)[:limit]
+        transactions = get_transaction_history(user_id, limit=limit)
         
         return success_response({
             "transactions": transactions,
