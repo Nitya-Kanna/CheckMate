@@ -57,4 +57,3 @@ def handler(event, context):
     except Exception as e:
         return error_response(500, f"Internal server error: {str(e)}")
 
-# Made with Bob

@@ -176,4 +176,3 @@ function HistoryScreen({ onBack }) {
 
 export default HistoryScreen
 
-// Made with Bob

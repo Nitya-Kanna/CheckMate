@@ -81,4 +81,3 @@ function AIParseStep({ aiInput, setAiInput, receiptData, onParse }) {
 
 export default AIParseStep
 
-// Made with Bob

@@ -172,4 +172,3 @@ const PaymentRequestScreen = ({ requestId, request: requestFromProps, onBack, on
 
 export default PaymentRequestScreen;
 
-// Made with Bob

@@ -80,4 +80,3 @@ echo "🔗 Your API endpoint: https://fs05jjlase.execute-api.ap-southeast-1.amaz
 echo ""
 echo "✨ Happy deploying!"
 
-# Made with Bob

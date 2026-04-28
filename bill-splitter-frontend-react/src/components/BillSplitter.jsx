@@ -313,4 +313,3 @@ function BillSplitter({ onBack, selectedReceipt }) {
 
 export default BillSplitter
 
-// Made with Bob

@@ -183,4 +183,3 @@ const PaymentConfirmScreen = ({ request, onBack, onConfirm, onCancel }) => {
 
 export default PaymentConfirmScreen;
 
-// Made with Bob

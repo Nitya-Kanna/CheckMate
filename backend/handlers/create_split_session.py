@@ -121,4 +121,3 @@ def lambda_handler(event, context):
         print(f"Error creating split session: {str(e)}")
         return error_response(500, f'Internal server error: {str(e)}')
 
-# Made with Bob

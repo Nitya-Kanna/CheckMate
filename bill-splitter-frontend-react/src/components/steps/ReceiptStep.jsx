@@ -65,4 +65,3 @@ function ReceiptStep({ receiptData, onNext, clickable }) {
 
 export default ReceiptStep
 
-// Made with Bob

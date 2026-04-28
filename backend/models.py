@@ -111,4 +111,3 @@ def get_current_timestamp() -> str:
     """Get current UTC timestamp in ISO format"""
     return datetime.utcnow().isoformat() + 'Z'
 
-# Made with Bob

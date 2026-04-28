@@ -114,4 +114,3 @@ echo "📝 Update your frontend API_BASE_URL to:"
 echo "  ${API_ENDPOINT}"
 echo ""
 
-# Made with Bob

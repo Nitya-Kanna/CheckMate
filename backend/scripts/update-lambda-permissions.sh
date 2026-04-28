@@ -100,4 +100,3 @@ echo "1. Package and deploy updated Lambda functions"
 echo "2. Test the endpoints with real DynamoDB data"
 echo ""
 
-# Made with Bob

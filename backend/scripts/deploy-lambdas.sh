@@ -109,4 +109,3 @@ echo "Cleaning up deployment files..."
 rm -rf "$DEPLOY_DIR"
 echo -e "${GREEN}✓ Cleanup complete${NC}"
 
-# Made with Bob

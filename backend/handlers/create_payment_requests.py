@@ -144,4 +144,3 @@ def lambda_handler(event, context):
         print(f"Error creating payment requests: {str(e)}")
         return error_response(500, f'Internal server error: {str(e)}')
 
-# Made with Bob

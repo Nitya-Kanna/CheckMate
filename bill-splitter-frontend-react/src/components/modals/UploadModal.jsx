@@ -239,4 +239,3 @@ function UploadModal({ onClose, onUploadSuccess }) {
 
 export default UploadModal
 
-// Made with Bob

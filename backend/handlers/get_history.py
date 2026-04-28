@@ -137,4 +137,3 @@ def generate_mock_transactions(user_id: str):
     
     return transactions
 
-# Made with Bob

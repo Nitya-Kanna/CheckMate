@@ -115,4 +115,3 @@ function SplitStep({ confirmedData, receiptData, onNext }) {
 
 export default SplitStep
 
-// Made with Bob

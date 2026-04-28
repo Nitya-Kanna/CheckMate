@@ -396,4 +396,3 @@ Built with ❤️ for the Touch 'n Go Hackathon
 
 ---
 
-**Made with Bob** 🤖

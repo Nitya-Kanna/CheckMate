@@ -76,4 +76,3 @@ echo ""
 echo "✅ Your frontend is already using this API!"
 echo ""
 
-# Made with Bob

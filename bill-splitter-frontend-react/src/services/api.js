@@ -168,4 +168,3 @@ export default {
   generatePaymentQR
 }
 
-// Made with Bob

@@ -58,4 +58,3 @@ function ContactModal({ isOpen, onClose, person, contacts, onSelect }) {
 
 export default ContactModal
 
-// Made with Bob

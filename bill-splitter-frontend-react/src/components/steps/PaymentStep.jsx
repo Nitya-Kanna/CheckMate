@@ -75,4 +75,3 @@ function PaymentStep({ splitResult, onReset }) {
 
 export default PaymentStep
 
-// Made with Bob

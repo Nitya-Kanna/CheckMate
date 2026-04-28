@@ -157,4 +157,3 @@ const PaymentSuccessScreen = ({ transaction, onDone, onViewReceipt }) => {
 
 export default PaymentSuccessScreen;
 
-// Made with Bob

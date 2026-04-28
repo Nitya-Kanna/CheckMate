@@ -268,4 +268,3 @@ function ReceiptsListScreen({ onBack, onSelectReceipt }) {
 
 export default ReceiptsListScreen
 
-// Made with Bob

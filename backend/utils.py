@@ -247,4 +247,3 @@ def parse_body(event: Dict[str, Any]) -> Dict[str, Any]:
             return {}
     return body or {}
 
-# Made with Bob

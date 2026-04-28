@@ -280,4 +280,3 @@ function ConfirmStep({ parsedData, receiptData, onConfirm }) {
 
 export default ConfirmStep
 
-// Made with Bob

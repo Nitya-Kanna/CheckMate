@@ -169,4 +169,3 @@ function HomeScreen({ onNavigate, appMode = 'requester' }) {
 
 export default HomeScreen
 
-// Made with Bob

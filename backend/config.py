@@ -85,4 +85,3 @@ config = Config()
 if config.is_production():
     config.validate()
 
-# Made with Bob

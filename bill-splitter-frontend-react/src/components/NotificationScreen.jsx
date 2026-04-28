@@ -128,4 +128,3 @@ const NotificationScreen = ({ onNotificationClick, onClose }) => {
 
 export default NotificationScreen;
 
-// Made with Bob
