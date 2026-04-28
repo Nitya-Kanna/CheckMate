@@ -46,14 +46,14 @@ What sets CheckMate apart is its **genuine multi-cloud architecture**. The backe
 ### Full App Walkthrough
 Experience CheckMate in action — from receipt upload to payment completion:
 
-https://github.com/user-attachments/assets/2ba031ff-075f-41e5-9d7a-15cafaaa699d
+<video src="https://github.com/user-attachments/assets/2ba031ff-075f-41e5-9d7a-15cafaaa699d" controls width="100%"></video>
 
 ### Quick Split Demo
 Watch how natural language splitting works in real-time:
 
-https://github.com/user-attachments/assets/2ba031ff-075f-41e5-9d7a-15cafaaa699d
+<video src="https://github.com/user-attachments/assets/2ba031ff-075f-41e5-9d7a-15cafaaa699d" controls width="100%"></video>
 
-> **Note:** Videos are hosted in the `demo-videos/` directory. GitHub automatically renders `.mov` files when referenced with the proper URL format.
+> **Note:** Videos are embedded directly in the README for instant playback. Click play to watch the demos!
 
 | 🤖 **AI-Powered OCR** | Qwen Vision-Language Model reads receipt images and returns structured JSON with items, prices, tax, and totals. |
 | 🗣️ **Natural Language Splitting** | Type *"Calvin had nasi lemak, Jet had iced coffee, rojak shared"* and AI auto-discovers people, resolves contact ambiguity, assigns items, and calculates amounts. |
